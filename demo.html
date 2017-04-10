@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<title>简单的jQuery分页插件下载</title>
+<style>
+*{ margin:0; padding:0; list-style:none;}
+a{ text-decoration:none;}
+a:hover{ text-decoration:none;}
+.tcdPageCode{padding: 15px 20px;text-align: left;color: #ccc;text-align:center;}
+.tcdPageCode a{
+	display: inline-block;color: #428bca;display: inline-block;height: 25px;	
+	line-height: 25px;	padding: 0 10px;border: 1px solid #ddd;	margin: 0 2px;border-radius: 4px;vertical-align: middle;
+}
+.tcdPageCode a:hover{text-decoration: none;border: 1px solid #428bca;}
+.tcdPageCode span.current{
+	display: inline-block;height: 25px;line-height: 25px;padding: 0 10px;margin: 0 2px;color: #fff;
+	background-color: #428bca;	border: 1px solid #428bca;border-radius: 4px;vertical-align: middle;
+}
+.tcdPageCode span.disabled{	
+	display: inline-block;height: 25px;line-height: 25px;padding: 0 10px;margin: 0 2px;	color: #bfbfbf;
+	background: #f2f2f2;border: 1px solid #bfbfbf;border-radius: 4px;vertical-align: middle;
+}
+.databox{width:70%;margin:20px auto;}
+.databox li{line-height:30px;border-bottom:1px dashed #f00;}
+</style>
+</head>
+<body>
+
+<ul class="databox">
+    <li>1页0:测试数据id（0）</li>
+    <li>1页1:测试数据id（1）</li>
+    <li>1页2:测试数据id（2）</li>
+    <li>1页3:测试数据id（3）</li>
+    <li>1页4:测试数据id（4）</li>
+    <li>1页5:测试数据id（5）</li>
+    <li>1页6:测试数据id（6）</li>
+    <li>1页7:测试数据id（7）</li>
+    <li>1页8:测试数据id（8）</li>
+</ul>
+<div class="tcdPageCode"></div>
+
+<script src="js/jquery.min1.8.3.js"></script>
+<script src="js/jquery.page.js"></script>
+<script>
+/** 无刷新分页插件配置
+    conf={
+        total  : 数据总条数,
+        limit    :  每页展示条数,
+        current  :  当前页（可选，默认当前页为第一页）,
+        backFn   ： callBack
+    }
+*/
+$(".tcdPageCode").createPage({
+    total :658,
+    limit : 9,
+    current : 1,
+    backFn:function(n){
+        $.ajax({
+            url : 'data.php',
+            type : 'get',
+            dataType : 'json',
+            data : {'page':n,'limit':this.limit},
+            success : function(data){
+                $('.databox').empty();
+                for(var i=0; i<data.length; i++){
+                    $('.databox').append('<li>'+data[i]['id']+':'+data[i]['title']+'</li>');
+                }
+            },
+            error : function(data){
+                console.log('数据加载失败');
+                return false;
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>
