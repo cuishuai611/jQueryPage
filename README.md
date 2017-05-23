@@ -1,7 +1,7 @@
 #jQueryPage.js
 列表分页jQuery扩展
 
-在线演示地址：http://cs.usmouse.com/git/jQueryPage/demo.html
+在线演示地址：http://www.0317news.cn/git/jQueryPage/demo.html
 
 author: Mr Cui（QQ：764028466）
 
