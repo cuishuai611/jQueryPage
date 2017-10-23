@@ -1,33 +1,34 @@
 /**
  * jQuery.page 1.0
  *
- * æ— åˆ·æ–°åˆ†é¡µjQueryæ‰©å±•
+ * ÎÞË¢ÐÂ·ÖÒ³jQueryÀ©Õ¹
  *  
  * author : Mr Cui
  *
- * å„ä½åŒä»è½»æ‹,æ¬¢è¿ŽæŒ‡æ­£çº é”™,è”ç³»QQï¼š764028466
+ * ¸÷Î»Í¬ÈÊÇáÅÄ,»¶Ó­Ö¸Õý¾À´í,ÁªÏµQQ£º764028466
  *
  */
 ;(function($){
 	var ms = {
 		init:function(obj,args){
 			return (function(){
+				args.backFn(args.current);
 				ms.fillHtml(obj,args);
 				ms.bindEvent(obj,args);
 			})();
 		},
-		//å¡«å……html
+		//Ìî³ähtml
 		fillHtml:function(obj,args){
 			return (function(){
 				obj.empty();
-				//ä¸Šä¸€é¡µ
+				//ÉÏÒ»Ò³
 				if(args.current > 1){
-					obj.append('<a href="javascript:;" class="prevPage">ä¸Šä¸€é¡µ</a>');
+					obj.append('<a href="javascript:;" class="prevPage">ÉÏÒ»Ò³</a>');
 				}else{
 					obj.remove('.prevPage');
-					obj.append('<span class="disabled">ä¸Šä¸€é¡µ</span>');
+					obj.append('<span class="disabled">ÉÏÒ»Ò³</span>');
 				}
-				//ä¸­é—´é¡µç 
+				//ÖÐ¼äÒ³Âë
 				if(args.current != 1 && args.current >= 4 && args.pageCount != 4){
 					obj.append('<a href="javascript:;" class="tcdNumber">'+1+'</a>');
 				}
@@ -56,18 +57,19 @@
 				if(args.current != args.pageCount && args.current < args.pageCount -2  && args.pageCount != 4){
 					obj.append('<a href="javascript:;" class="tcdNumber">'+args.pageCount+'</a>');
 				}
-				//ä¸‹ä¸€é¡µ
+				//ÏÂÒ»Ò³
 				if(args.current < args.pageCount){
-					obj.append('<a href="javascript:;" class="nextPage">ä¸‹ä¸€é¡µ</a>');
+					obj.append('<a href="javascript:;" class="nextPage">ÏÂÒ»Ò³</a>');
 				}else{
 					obj.remove('.nextPage');
-					obj.append('<span class="disabled">ä¸‹ä¸€é¡µ</span>');
+					obj.append('<span class="disabled">ÏÂÒ»Ò³</span>');
 				}
 			})();
 		},
-		//ç»‘å®šäº‹ä»¶
+		//°ó¶¨ÊÂ¼þ
 		bindEvent:function(obj,args){
 			return (function(){
+				obj.off("click");
 				obj.on("click","a.tcdNumber",function(){
 					var current = parseInt($(this).text());
 					ms.fillHtml(obj,{"current":current,"pageCount":args.pageCount});
@@ -75,7 +77,7 @@
 						args.backFn(current);
 					}
 				});
-				//ä¸Šä¸€é¡µ
+				//ÉÏÒ»Ò³
 				obj.on("click","a.prevPage",function(){
 					var current = parseInt(obj.children("span.current").text());
 					ms.fillHtml(obj,{"current":current-1,"pageCount":args.pageCount});
@@ -83,7 +85,7 @@
 						args.backFn(current-1);
 					}
 				});
-				//ä¸‹ä¸€é¡µ
+				//ÏÂÒ»Ò³
 				obj.on("click","a.nextPage",function(){
 					var current = parseInt(obj.children("span.current").text());
 					ms.fillHtml(obj,{"current":current+1,"pageCount":args.pageCount});
